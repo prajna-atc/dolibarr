@@ -673,7 +673,7 @@ class Societe extends CommonObject
 		}
 
 		// Check for duplicate or mandatory fields defined into setup
-		$array_to_check=array('IDPROF1','IDPROF2','IDPROF3','IDPROF4','IDPROF5','IDPROF6','EMAIL');
+		$array_to_check=array('IDPROF1','IDPROF2','IDPROF3','IDPROF4','IDPROF5','IDPROF6','EMAIL','PHONE');
 		foreach($array_to_check as $key)
 		{
 			$keymin=strtolower($key);
@@ -731,6 +731,30 @@ class Societe extends CommonObject
 						$this->errors[] = $langs->trans("ErrorBadEMail", $this->email).' ('.$langs->trans("ForbiddenBySetupRules").')';
 					}
 				}
+					if ($key == 'PHONE')
+				{
+
+					// Check for unicity
+					if ($vallabel && ! empty($conf->global->SOCIETE_PHONE_UNIQUE))
+					{
+						if ($this->id_prof_exists($keymin, $vallabel, ($this->id > 0 ? $this->id : 0)))
+						{
+							$langs->load("errors");
+							$error++; $this->errors[] = $langs->trans('Phone')." ".$langs->trans("ErrorProdIdAlreadyExist", $vallabel).' ('.$langs->trans("ForbiddenBySetupRules").')';
+						}
+					}
+
+					
+					// Check for mandatory
+					if (! empty($conf->global->SOCIETE_PHONE_MANDATORY) && empty($this->phone) )
+					{
+						$langs->load("errors");
+						$error++;
+						$this->errors[] = 'Phone is Required';
+					}
+				}
+
+
 			}
 		}
 

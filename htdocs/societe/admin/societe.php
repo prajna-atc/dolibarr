@@ -619,6 +619,8 @@ $profid['IDPROF6'][0]=$langs->trans("ProfId6");
 $profid['IDPROF6'][1]=$langs->transcountry('ProfId6', $mysoc->country_code);
 $profid['EMAIL'][0]=$langs->trans("EMail");
 $profid['EMAIL'][1]=$langs->trans('Email');
+$profid['PHONE'][0]='Phone';
+$profid['PHONE'][1]='Phone';
 
 $nbofloop=count($profid);
 foreach($profid as $key => $val)

@@ -462,7 +462,7 @@ if (empty($reshook))
 		// Check parameters
 
 		// Check for mandatory fields defined into setup
-		$array_to_check=array('IDPROF1','IDPROF2','IDPROF3','IDPROF4','IDPROF5','IDPROF6','EMAIL');
+		$array_to_check=array('IDPROF1','IDPROF2','IDPROF3','IDPROF4','IDPROF5','IDPROF6','EMAIL','PHONE');
 		foreach($array_to_check as $key)
 		{
 			$keymin=strtolower($key);
@@ -499,6 +499,18 @@ if (empty($reshook))
 						setEventMessages($langs->trans("ErrorBadEMail", $object->thirdparty->email).' ('.$langs->trans("ForbiddenBySetupRules").')', null, 'errors');
 					}
 				}
+				if ($key == 'PHONE')
+				{
+					// Check for mandatory
+					if (! empty($conf->global->SOCIETE_PHONE_INVOICE_MANDATORY) &&  empty($object->thirdparty->phone))
+					{
+						$langs->load("errors");
+						$error++;
+						setEventMessages('PHONE Number Must be Mandatory', null, 'errors');
+					}
+				}
+					
+
 			}
 		}
 
